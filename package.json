@@ -1,0 +1,10 @@
+{
+	"version": "0.0.1",
+	"author": "rickytan",
+	"dependencies": {
+		"aliyun-oss": "*",
+		"q": "*",
+		"commander": "*"
+	},
+	"main": "index.js"
+}
