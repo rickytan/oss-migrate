@@ -8,7 +8,7 @@
         "aliyun-oss": "*",
 		"q": "*",
 		"commander": "*",
-        "filewalker": "*"
+        "walk": "*"
 	},
 	"main": "index.js",
     "bin": {

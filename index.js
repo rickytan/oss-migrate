@@ -123,10 +123,16 @@ commander.command('upload <dir> <bucket>')
             var marker = '';
 
             var promises = [];
-            require('filewalker')(localDir).on('dir', function (dirpath) {
-                //console.log(path);
-                //return false;
-            }).on('file', function (filepath, size) {
+
+            var walk = require('walk');
+
+            var walker = walk.walk(localDir, {
+                followLinks: false
+            });
+
+            walker.on('file', function (root, fileStats, next) {
+                var filepath = path.relative(localDir, path.join(root, fileStats.name));
+                console.log(filepath);
                 var parts = filepath.split(path.sep);
                 var skip = false;   // skip hidden files
                 parts.forEach(function (part) {
@@ -135,24 +141,18 @@ commander.command('upload <dir> <bucket>')
                 });
                 if (!skip) {
                     console.log("Uploading %s", filepath);
-                    var defer = Q.defer();
-                    
-                    oss.uploadFile(path.join(localDir, filepath), filepath, function(err) {
-                        if (err)
-                            defer.reject(err);
-                        else
-                            defer.resolve();
+                    return next();
+                    oss.uploadFile(path.join(localDir, filepath), filepath, function (err) {
+                        if (err) console.log(err);
+                        next();
                     });
-                    promises.push(defer.promise);
-                }
-            }).on('done', function () {
-                console.log('File traveser done!');
-                Q.all(promises).catch(function (e) {
-                    console.log(e);
-                }).done(function () {
+                } else
+                    next();
+            });
 
-                });
-            }).walk();
+            walker.on('end', function () {
+                console.log('done!');
+            });
         });
 
 commander.parse(process.argv);
