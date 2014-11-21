@@ -1,10 +1,17 @@
 {
 	"version": "0.0.1",
 	"author": "rickytan",
+    "description": "This is used to sync your Aliyun OSS files with your local directory",
+    "repository": "git://github.com:rickytan/migrate.git",
 	"dependencies": {
-		"aliyun-oss": "*",
+		"oss-easy": ">=0.2.7",
+        "aliyun-oss": "*",
 		"q": "*",
-		"commander": "*"
+		"commander": "*",
+        "filewalker": "*"
 	},
-	"main": "index.js"
+	"main": "index.js",
+    "bin": {
+        "oss-migrate": "index.js"
+    }
 }
