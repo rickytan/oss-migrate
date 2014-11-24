@@ -1,5 +1,6 @@
 {
     "accessKeyId": "",
     "accessKeySecret": "",
-    "host": "oss-cn-hangzhou-internal.aliyuncs.com"
+    "host": "oss-cn-hangzhou-internal.aliyuncs.com",
+    "port": 80
 }

@@ -132,7 +132,6 @@ commander.command('upload <dir> <bucket>')
 
             walker.on('file', function (root, fileStats, next) {
                 var filepath = path.relative(localDir, path.join(root, fileStats.name));
-                console.log(filepath);
                 var parts = filepath.split(path.sep);
                 var skip = false;   // skip hidden files
                 parts.forEach(function (part) {
@@ -141,7 +140,6 @@ commander.command('upload <dir> <bucket>')
                 });
                 if (!skip) {
                     console.log("Uploading %s", filepath);
-                    return next();
                     oss.uploadFile(path.join(localDir, filepath), filepath, function (err) {
                         if (err) console.log(err);
                         next();
